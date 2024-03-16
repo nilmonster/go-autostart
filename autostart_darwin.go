@@ -31,18 +31,18 @@ func init() {
 	launchDir = filepath.Join(os.Getenv("HOME"), "Library", "LaunchAgents")
 }
 
-func (a *App) path() string {
+func (a *app) path() string {
 	return filepath.Join(launchDir, a.Name+".plist")
 }
 
 // IsEnabled Check is app enabled startup.
-func (a *App) IsEnabled() bool {
+func (a *app) IsEnabled() bool {
 	_, err := os.Stat(a.path())
 	return err == nil
 }
 
 // Enable this app on startup.
-func (a *App) Enable() error {
+func (a *app) Enable() error {
 	t := template.Must(template.New("job").Parse(jobTemplate))
 
 	if err := os.MkdirAll(launchDir, 0777); err != nil {
@@ -62,7 +62,7 @@ func (a *App) Enable() error {
 }
 
 // Disable this app on startup.
-func (a *App) Disable() error {
+func (a *app) Disable() error {
 
 	return os.Remove(a.path())
 }

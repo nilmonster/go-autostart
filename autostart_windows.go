@@ -24,16 +24,16 @@ func init() {
 	startupDir = filepath.Join(os.Getenv("USERPROFILE"), "AppData", "Roaming", "Microsoft", "Windows", "Start Menu", "Programs", "Startup")
 }
 
-func (a *App) path() string {
+func (a *app) path() string {
 	return filepath.Join(startupDir, a.Name+".lnk")
 }
 
-func (a *App) IsEnabled() bool {
+func (a *app) IsEnabled() bool {
 	_, err := os.Stat(a.path())
 	return err == nil
 }
 
-func (a *App) Enable() error {
+func (a *app) Enable() error {
 	path := a.Exec[0]
 	args := strings.Join(a.Exec[1:], " ")
 
@@ -47,6 +47,6 @@ func (a *App) Enable() error {
 	return nil
 }
 
-func (a *App) Disable() error {
+func (a *app) Disable() error {
 	return os.Remove(a.path())
 }
